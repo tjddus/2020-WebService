@@ -9,7 +9,7 @@ class Product(models.Model):
     makerName = models.CharField(null=True, default='', max_length=50)
     photoUrl = models.CharField(max_length=500)
     createdDate = models.DateTimeField(default=timezone.now)
-    publishedDate = models.DateTimeField(null=True)
+    publishedYn = models.BooleanField(default=0)
     achievementRate = models.IntegerField(default=0)
     totalAmount = models.IntegerField(default=0)
     totalSupporter = models.IntegerField(default=0)
@@ -22,3 +22,19 @@ class Product(models.Model):
 class Tester(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    grade = models.CharField(max_length=10)
+    contents = models.CharField(max_length=300)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.contents
+
+
+class Comment(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    contents = models.CharField(max_length=200)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.contents
