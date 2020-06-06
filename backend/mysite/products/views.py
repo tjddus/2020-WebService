@@ -124,7 +124,7 @@ def createComment(request, productId):
     '''
     상품 댓글에 유저 추가 및 삭제
     ---
-    ## `/product/createComment/{id}`
+    ## `/product/createComment/{productId}`
     '''
     permissions_classes=[
         permissions.IsAuthenticated,
@@ -151,7 +151,7 @@ def deleteComment(request, productId):
     '''
     상품 댓글에 유저 추가 및 삭제
     ---
-    ## `/product/deleteComment/{id}`
+    ## `/product/deleteComment/{productId}`
     '''
     permissions_classes=[
         permissions.IsAuthenticated,
