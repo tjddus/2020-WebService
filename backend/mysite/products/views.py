@@ -4,8 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 import json
-from .models import Product, Tester, Comment
-from .serializers import ProductSerializer, CommentProductSerializer
+from products.models import Product, Tester, Comment
+from products.serializers import ProductSerializer, CommentSerializer, TesterSerializer, CreateProductSerializer
 
 
 class loadProducts(generics.GenericAPIView):
@@ -30,11 +30,12 @@ class loadProducts(generics.GenericAPIView):
     '''
     def get(self, request, *args, **kwargs):
         products = []
-        publishedYn = request.GET.get('publishedYn')
-        queryset = Product.objects.filter(publishedYn = publishedYn)
-        serializer = ProductSerializer(queryset, many=True)
-        serializer.is_valid(raise_exception=True)
-        return Response({'products': serializer.data})
+#         publishedYn = request.GET.get('publishedYn')
+#         queryset = Product.objects.filter(publishedYn = publishedYn)
+        queryset = Product.objects.all()
+        print(queryset)
+        products = ProductSerializer(queryset, many=True).data
+        return Response({'products': products})
 
 
 class DetailProduct(generics.RetrieveUpdateDestroyAPIView):
@@ -98,7 +99,7 @@ def deleteTester(request, productId):
 
 
 @api_view(['GET'])
-def loadTester(request, productId):
+def loadTesters(request, productId):
     '''
     상품 테스터에 대한 전체 등급 선정을 위한 조회
     ---
@@ -147,17 +148,17 @@ def createComment(request, productId):
         raise NameError
 
 @api_view(['DELETE'])
-def deleteComment(request, productId):
+def deleteComment(request, commentId):
     '''
     상품 댓글에 유저 추가 및 삭제
     ---
-    ## `/product/deleteComment/{productId}`
+    ## `/product/deleteComment/{commentId}`
     '''
     permissions_classes=[
         permissions.IsAuthenticated,
     ]
     if request.method == 'DELETE':
-        comment = Comment.objects.get(product=productId, user=self.request.user.id)
+        comment = Comment.objects.get(id = commentId)
 
         comment.delete()
         return Response("delete success")

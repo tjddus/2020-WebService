@@ -56,9 +56,7 @@
           {title: 'WADIZ', icon: 'school', route: '/'},
           {title: '내 파일', icon: 'folder', route: '/'},
           {title: '최근 항목', icon: 'list', route: '/'},
-          {title: '사진', icon: 'image', route: '/inspire'},
-          {title: '공유됨', icon: 'get_app', route: '/'},
-          {title: '휴지통', icon: 'delete', route: '/'}
+          {title: '상품목록', icon: 'image', route: '/products'},
         ]
       }
     }

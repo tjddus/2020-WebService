@@ -1,113 +1,62 @@
+import products from "../pages/products";
+
 export const state = () => ({
-  files: [],
-  file: null,
+  products: [],
+  product: null,
 });
 
 export const mutations = {
-  loadFiles(state, payload) {
-    const {files} = payload;
-    state.files = files;
+  loadProducts(state, payload) {
+    const {products} = payload;
+    console.log(products);
+    state.products = products;
   },
-  uploadFolder(state, payload) {
-    const {file} = payload;
-    console.log(file);
-    state.files.push(file);
+  loadProduct(state, payload) {
+    const {product} = payload;
+    state.product = product;
   },
-  uploadFiles(state, payload) {
-    const {files} = payload;
-    state.files.concat(files);
+  uploadProduct(state, payload) {
+    const {product} = payload;
+    state.products.push(product);
+    state.imageUrls = [];
   },
-  deleteFile(state, payload) {
-    const {fileId} = payload;
-    state.file = null;
-    state.files.splice(state.files.findIndex(file => file.id === fileId), 1);
-  },
+  deleteProduct(state, payload) {
+    const {productId} = payload;
+    state.product = null;
+    state.products.splice(state.products.findIndex(product => product.id === productId), 1);
+  }
 };
-
 export const actions = {
-  loadFiles({commit}, payload) {
+  /*-- load --*/
+  loadProducts({commit}, payload) {
     return new Promise(async (resolve, reject) => {
-      try {
-        const res = await this.$axios.get('http://127.0.0.1:8000/files/loadFiles', {
-          withCredentials: true
-        });
-        const {files} = res.data;
-        commit('loadFiles', {files});
-        return resolve();
-      } catch (e) {
-        console.error(e);
-        return reject(e);
-      }
-    })
-  },
-  uploadFolder({commit}, payload) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        // const {formData} = payload;
-        // const res = await this.$axios.post('http://127.0.0.1:8000/files/uploadFolder', formData, {
-        //   withCredentials: true
-        // });
-        const {file} = payload;
-        // const {file} = res;
-        console.log(file);
-        commit('uploadFolder', {file});
-        return resolve();
+        try {
 
-      } catch (e) {
-        console.error(e);
-        return reject(e);
-      }
-    })
-  },
-  uploadFiles({commit}, payload) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const {formData} = payload;
-        for (var value of formData.values()) {
-
-          console.log(value);
-
+          const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadProducts`, {
+            withCredentials: true
+          });
+          const {products} = res.data;
+          commit('loadProducts', {products});
+          return resolve();
+        } catch (e) {
+          console.error(e);
+          return reject(e);
         }
-        const res = await this.$axios.post('http:/127.0.0.1:8000/files/uploadFiles', formData, {
+      }
+    )
+  },
+
+  loadProduct({commit}, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const {productId} = payload;
+        console.log('loadproduct productId', productId);
+        const res = await this.$axios.get(`http://127.0.0.1:8000/product/productDetail/${productId}`, {
           withCredentials: true
         });
-        const {files} = res.data;
-        commit('uploadFiles', files);
+        const {product} = res.data;
+        commit('load{roduct', {product});
         return resolve();
-
-      } catch (e) {
-        console.error(e);
-        return reject(e);
-      }
-    });
-  },
-  deleteFolder({commit}, payload) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const {folderId} = payload;
-        await this.$axios.get('http://127.0.0.1/files/deleteFile', {
-          fileId: folderId
-        }, {
-          withCredentials: true
-        });
-        commit('deleteFile', {fileId: folderId});
-
-      } catch (e) {
-        console.error(e);
-        return reject(e);
-      }
-    });
-  },
-  deleteFile({commit}, payload) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const {fileId} = payload;
-        await this.$axios.get('http://127.0.0.1/files/deleteFile', {
-          fileId: fileId
-        }, {
-          withCredentials: true
-        });
-        commit('deleteFile', {fileId: fileId});
 
       } catch (e) {
         console.error(e);
@@ -115,10 +64,43 @@ export const actions = {
       }
     })
   },
-  // updateFolder({commit}, payload) {
-  //
-  // },
-  // updateFile({commit}, payload) {
-  //
-  // }
+
+  // *-- product --*
+  uploadProduct({commit}, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const {title, content, imageUrls, tagNames} = payload;
+        const res = await this.$axios.post('http://127.0.0.1:8000/product/createProduct', {
+          title, content, imageUrls, tagNames
+        }, {
+          withCredentials: true
+        });
+        const {product} = res.data;
+        commit('uploadProduct', {product});
+        return resolve();
+
+      } catch (e) {
+        console.error(e);
+        return reject(e);
+      }
+    })
+  },
+
+  deleteProduct({commit}, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const {productId} = payload;
+        await this.$axios.delete(`http://localhost:4001/product/productDetail/${productId}`, {
+          withCredentials: true
+        });
+        commit('deleteProduct', {productId});
+        return resolve();
+      } catch (e) {
+        console.error(e);
+        return reject(e);
+      }
+    });
+  },
+
+
 };

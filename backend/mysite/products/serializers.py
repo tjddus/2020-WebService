@@ -1,12 +1,13 @@
 from rest_framework import serializers
 from .models import Product, Tester, Comment
+from rest_framework import serializers
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
 
-class CreateProductSerializer(serializer.ModelSerializer):
+class CreateProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['pid', 'name', 'category', 'makerName',
@@ -14,7 +15,7 @@ class CreateProductSerializer(serializer.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CommentProduct
+        model = Comment
         fields = '__all__'
 
 
