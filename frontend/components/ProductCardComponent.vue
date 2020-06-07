@@ -1,78 +1,47 @@
 <template>
   <v-row>
-    <div @click="showSingleProduct">
+    <div @click="showSingleProduct(product.id)">
       <v-card
         :loading="loading"
-        class="mx-auto my-12"
-        max-width="374"
+        class="my-2 ml-10"
+        max-width="300"
+        max-height="600"
       >
         <v-img
-          height="250"
+          height="200"
           :src="product.photoUrl"
         ></v-img>
 
-        <v-card-title>{{product.name}}</v-card-title>
+        <v-card-title class="subtitle-1">{{product.name}}</v-card-title>
 
         <v-card-text>
-          <v-row
-            align="center"
-            class="mx-0"
-          >
-            <v-rating
-              :value="4.5"
-              color="amber"
-              dense
-              half-increments
-              readonly
-              size="14"
-            ></v-rating>
-
-            <div class="grey--text ml-4">4.5 (413)</div>
-          </v-row>
-
-          <div class="my-4 subtitle-1">
+          <div class="caption">
             <div v-if="product.publishedYn">
               심사중
             </div>
             <div v-else>
-              {{product.createdDate}}
+              {{amount}}
             </div>
           </div>
 
-          <div>{{product.createdDate}}</div>
+          <div>{{time}}</div>
           <div>{{product.category}}</div>
           <div>{{product.makerName}}</div>
         </v-card-text>
 
         <v-divider class="mx-4"></v-divider>
-
-        <v-card-title>Tonight's availability</v-card-title>
-
-        <v-card-text>
-          <v-chip-group
-            v-model="selection"
-            active-class="deep-purple accent-4 white--text"
-            column
+        <v-card-text v-if="!product.publishedYn">
+          <v-progress-linear
+            v-model="product.achievementRate"
+            color="primary"
+            height="25"
+            reactive
           >
-            <v-chip>5:30PM</v-chip>
-
-            <v-chip>7:30PM</v-chip>
-
-            <v-chip>8:00PM</v-chip>
-
-            <v-chip>9:00PM</v-chip>
-          </v-chip-group>
+            <template v-slot="{ value }">
+              <strong>{{ Math.ceil(value) }}%</strong>
+            </template>
+          </v-progress-linear>
         </v-card-text>
-
-        <v-card-actions>
-          <v-btn
-            color="deep-purple lighten-2"
-            text
-            @click="reserve"
-          >
-            Reserve
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </div>
   </v-row>
@@ -87,26 +56,24 @@
       return {
         loading: false,
         selection: 1,
-        // productId: String(this.product.id)
+        productId: String(this.product.id)
       }
     },
     props: {
       product: Object
     },
-
+    computed: {
+      time() {
+        return this.$moment(this.product.createdAt).fromNow()
+      },
+      amount() {
+        return parseInt(this.product.totalAmount / this.product.totalSupporter)
+      },
+    },
     methods: {
-      reserve() {
-        this.loading = true;
-
-        setTimeout(() => (this.loading = false), 2000)
-      },
       showSingleProduct(productId) {
-        this.$router.push(`post/${productId}`);
+        this.$router.push(`product/${productId}`);
       },
-      Amount() {
-        return int(this.product.totalAmount / this.product.totalSupporter)
-      }
-
     },
 
   }

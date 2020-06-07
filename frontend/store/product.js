@@ -50,12 +50,12 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {productId} = payload;
-        console.log('loadproduct productId', productId);
-        const res = await this.$axios.get(`http://127.0.0.1:8000/product/productDetail/${productId}`, {
+        console.log('loadProduct productId', productId);
+        const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadProduct/${productId}`, {
           withCredentials: true
         });
         const {product} = res.data;
-        commit('load{roduct', {product});
+        commit('loadProduct', {product});
         return resolve();
 
       } catch (e) {
@@ -90,7 +90,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {productId} = payload;
-        await this.$axios.delete(`http://localhost:4001/product/productDetail/${productId}`, {
+        await this.$axios.delete(`http://127.0.0.1:8000/product/productDetail/${productId}`, {
           withCredentials: true
         });
         commit('deleteProduct', {productId});

@@ -38,17 +38,17 @@ class loadProducts(generics.GenericAPIView):
         return Response({'products': products})
 
 
-class DetailProduct(generics.RetrieveUpdateDestroyAPIView):
+class loadProduct(generics.GenericAPIView):
     '''
     상품 상세 조회 페이지
     ---
     ## `/product/productDetail/<int:pk>`
     '''
-    permissions_classes = [
-                permissions.IsAuthenticated,
-            ]
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    def get(self, request, productId):
+        queryset = Product.objects.get(id=productId)
+        print(queryset)
+        product = ProductSerializer(queryset).data
+        return Response({'product': product})
 
 
 ## Tester 기능
