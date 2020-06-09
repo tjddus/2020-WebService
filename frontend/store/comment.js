@@ -24,10 +24,11 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {productId} = payload;
-        const res = await this.$axios.get(`http://localhost:4001/comment/loadComments/${productId}`, {
+        const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadComments/${productId}`, {
           withCredentials: true
         });
         const {comments} = res.data;
+        console.log(comments);
         commit('loadComments', {comments});
         return resolve();
       } catch (e) {
@@ -40,7 +41,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {productId, content} = payload;
-        const res = await this.$axios.post(`http://localhost:4001/product/createComment/${productId}`, {
+        const res = await this.$axios.post(`http://127.0.0.1:8000/product/createComment/${productId}`, {
           content
         }, {
           withCredentials: true
@@ -60,7 +61,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {commentId} = payload;
-        await this.$axios.get(`http://localhost:4001/product/deleteComment/${commentId}`, {
+        await this.$axios.get(`http://127.0.0.1:8000/product/deleteComment/${commentId}`, {
           withCredentials: true
         });
         commit('deleteComment', {commentId});

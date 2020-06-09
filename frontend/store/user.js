@@ -1,7 +1,9 @@
 import Cookie from 'js-cookie';
+import {host} from '../env';
 
 export const state = () => ({
   me: null,
+  cookie: '',
 });
 
 export const mutations = {
@@ -15,7 +17,11 @@ export const mutations = {
   },
   logout(state) {
     state.me = null;
-  }
+  },
+  setToken(state, payload) {
+    const {cookie} = payload;
+    state.cookie = cookie;
+  },
 };
 
 export const actions = {
@@ -25,10 +31,11 @@ export const actions = {
       try {
         const {cookie} = payload;
         this.$axios.defaults.headers.common['Authorization'] = `Token ${cookie}`;
-        const res = await this.$axios.get('http://localhost:8000/api/auth/loadMe', {
+        const res = await this.$axios.get(`http://${host}/api/auth/loadMe`, {
           withCredentials: true
         });
         commit('loadMe', {user: res.data});
+        commit('setToken', {cookie});
         return resolve();
       } catch (e) {
         console.error(e);
@@ -42,7 +49,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {email, username, password} = payload;
-        const res = await this.$axios.post('http://127.0.0.1:8000/api/auth/signUp', {
+        const res = await this.$axios.post(`http://${host}/api/auth/signUp`, {
           email, username, password
         }, {
           withCredentials: true
@@ -71,7 +78,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {username, password} = payload;
-        const res = await this.$axios.post('http://127.0.0.1:8000/api/auth/login', {
+        const res = await this.$axios.post(`http://${host}/api/auth/login`, {
           username, password
         }, {
           withCredentials: true
@@ -101,9 +108,6 @@ export const actions = {
   logout({commit}) {
     return new Promise(async (resolve, reject) => {
       try {
-        // await this.$axios.get('http://127.0.0.1:8000/user/logout', {
-        //   withCredentials: true
-        // });
         if (process.browser) {
           localStorage.removeItem('accessToken');
           Cookie.remove('accessToken');

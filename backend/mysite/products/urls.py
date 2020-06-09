@@ -10,9 +10,9 @@ urlpatterns = [
     path('createTester/<int:productId>', views.createTester),
     path('deleteTester/<int:productId>', views.deleteTester),
     path('loadTesters/<int:productId>', views.loadTesters),
-    path('createComment/<int:productId>', views.createComment),
+    path('createComment/<int:productId>', views.createComment.as_view()),
     path('deleteComment/<int:productId>', views.deleteComment),
-    path('loadComments/<int:productId>', views.loadComments),
+    path('loadComments/<int:productId>', views.loadComments.as_view()),
 
 ]
 

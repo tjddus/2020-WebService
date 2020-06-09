@@ -117,7 +117,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': '2019-WebService',
             'USER': 'root',
-            'PASSWORD': 'test',
+            'PASSWORD': 'ksy98042!',
             'HOST': 'localhost',
             'PORT': '3306',
         }

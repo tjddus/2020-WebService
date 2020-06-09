@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 import json
 from products.models import Product, Tester, Comment
+from django.contrib.auth.models import User
 from products.serializers import ProductSerializer, CommentSerializer, TesterSerializer, CreateProductSerializer
 
 
@@ -119,9 +120,18 @@ def loadTesters(request, productId):
 
 
 
+class loadComments(generics.GenericAPIView):
+    def get(self, request, productId, *args, **kwargs):
+        print(productId)
+        queryset = Comment.objects.filter(product=productId)
+        comments = CommentSerializer(queryset, many=True).data
+        print(comments)
+        return Response({"comments" : comments})
+
+
+
 ## Comment 기능
-@api_view(['POST'])
-def createComment(request, productId):
+class createComment(generics.GenericAPIView):
     '''
     상품 댓글에 유저 추가 및 삭제
     ---
@@ -130,22 +140,24 @@ def createComment(request, productId):
     permissions_classes=[
         permissions.IsAuthenticated,
     ]
-    if request.method == 'POST':
+    def post(self, request, productId, *args, **kwargs):
+        print(self.request.data, productId)
+        print(self.request.user)
         try:
             Comment.objects.get(product=productId, user=self.request.user.id)
             return Response("이미 존재하는 유저입니다")
         except:
-            user = User.objects.get(id=self.request.user.id)
-            product = Product.objects.get(id=productId)
-            content = request.data.get('content')
+             user = User.objects.get(id=self.request.user.id)
+             product = Product.objects.get(id=productId)
+             content = request.data.get('content')
 
-            comment = Comment.objects.create(
-                product=product, user=user, content=content
-            )
-            print(comment)
-            return Response(comment)
-    else:
-        raise NameError
+             comment = Comment.objects.create(
+                    product=product, user=user, content=content
+                )
+             print(comment)
+             return Response(comment)
+        else:
+            raise NameError
 
 @api_view(['DELETE'])
 def deleteComment(request, commentId):
@@ -164,24 +176,3 @@ def deleteComment(request, commentId):
         return Response("delete success")
     else:
         raise NameError
-
-
-@api_view(['GET'])
-def loadComments(request, productId):
-    '''
-    상품 게시판에 대한 댓글 list 기능
-    ---
-    ## `/product/loadComments/{productId}`
-    '''
-    queryset = Comment.objects.all().order_by('-id')
-    queryset = queryset.filter(product = productId)
-    comments = []
-    for query in queryset:
-        comment = {}
-        comment['id'] = query.id
-        comment['user'] = query.user.id
-        comment['name'] = query.user.username
-        comment['content'] = query.content
-        comment['createdAt'] = query.createdAt
-        comments.append(comment)
-    return Response(comments)

@@ -83,6 +83,9 @@ module.exports = {
     '@nuxtjs/vuetify',
     '@nuxtjs/moment',
   ],
+  plugins: [
+    {src: '~/plugins/axios.js', mode: 'client'}
+  ],
 
   // pwa: {
   //     icon: {

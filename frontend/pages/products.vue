@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout row>
+    <v-layout row justify-center="center">
       <div v-for="(product, index) in products">
         <v-flex md4 v-if="index % 3 === 0">
           <product-card-component :product="product"/>

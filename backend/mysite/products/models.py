@@ -23,7 +23,7 @@ class Tester(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     grade = models.CharField(max_length=10)
-    contents = models.CharField(max_length=300)
+    content = models.CharField(max_length=300)
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Tester(models.Model):
 class Comment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    contents = models.CharField(max_length=200)
+    content = models.CharField(max_length=200)
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
