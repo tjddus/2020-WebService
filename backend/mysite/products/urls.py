@@ -6,12 +6,13 @@ from . import views
 urlpatterns = [
     path('loadProducts', views.loadProducts.as_view()),
     path('loadProduct/<int:productId>', views.loadProduct.as_view()),
-#     path('deleteProduct/<int:productId>', views.DetailProduct.as_view()),
+    path('deleteProduct/<int:productId>', views.deleteProduct.as_view()),
     path('createTester/<int:productId>', views.createTester),
     path('deleteTester/<int:productId>', views.deleteTester),
     path('loadTesters/<int:productId>', views.loadTesters),
     path('createComment/<int:productId>', views.createComment.as_view()),
-    path('deleteComment/<int:productId>', views.deleteComment),
+    path('deleteComment/<int:commentId>', views.deleteComment.as_view()),
+#     path('updateComment/<int:commentId>', views.deleteComment.as_view()),
     path('loadComments/<int:productId>', views.loadComments.as_view()),
 
 ]

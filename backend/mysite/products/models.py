@@ -37,4 +37,4 @@ class Comment(models.Model):
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.contents
+        return self.content

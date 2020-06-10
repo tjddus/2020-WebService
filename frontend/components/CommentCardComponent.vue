@@ -3,14 +3,14 @@
     <v-container>
       <v-row>
         <v-col cols="2">
-          {{comment.user.userName}}
+          {{comment.user}}
         </v-col>
         <v-col cols="6">
           <v-text-field v-if="updateTrue"
                         v-model="newComment">
           </v-text-field>
           <div v-if="!updateTrue" @click="updateCommentTrue">
-            {{comment.comment}}
+            {{comment.content}}
           </div>
         </v-col>
 
@@ -35,7 +35,7 @@
     data() {
       return {
         updateTrue: false,
-        newComment: this.comment.comment
+        newComment: this.comment.content
       }
     },
     props: {
@@ -45,7 +45,7 @@
       async deleteComment() {
         try {
           await this.$store.dispatch('comment/deleteComment', {
-            comment: this.comment
+            commentId: this.comment.id
           });
         } catch (e) {
           console.error(e);
@@ -53,7 +53,7 @@
       },
       updateCommentTrue() {
         this.updateTrue = !this.updateTrue;
-        this.newComment = this.comment.comment;
+        this.newComment = this.comment.content;
         console.log('click updateComment');
       },
       async updateComment() {

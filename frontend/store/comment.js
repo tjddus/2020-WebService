@@ -16,7 +16,7 @@ export const mutations = {
   },
   deleteComment(state, payload) {
     const {commentId} = payload;
-    state.comments.splice(state.products.findIndex(comment => comment.id === commentId), 1);
+    state.comments.splice(state.comments.findIndex(comment => comment.id === commentId), 1);
   }
 };
 export const actions = {
@@ -61,7 +61,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {commentId} = payload;
-        await this.$axios.get(`http://127.0.0.1:8000/product/deleteComment/${commentId}`, {
+        await this.$axios.delete(`http://127.0.0.1:8000/product/deleteComment/${commentId}`, {
           withCredentials: true
         });
         commit('deleteComment', {commentId});

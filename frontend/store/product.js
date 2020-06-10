@@ -90,7 +90,7 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const {productId} = payload;
-        await this.$axios.delete(`http://127.0.0.1:8000/product/productDetail/${productId}`, {
+        await this.$axios.delete(`http://127.0.0.1:8000/product/deleteProduct/${productId}`, {
           withCredentials: true
         });
         commit('deleteProduct', {productId});

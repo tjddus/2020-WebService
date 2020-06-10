@@ -51,73 +51,69 @@ class loadProduct(generics.GenericAPIView):
         product = ProductSerializer(queryset).data
         return Response({'product': product})
 
-
-## Tester 기능
-@api_view(['POST'])
-def createTester(request, productId):
+class deleteProduct(generics.GenericAPIView):
     '''
-    상품 테스터에 유저 추가
+    상품 삭제 페이지
     ---
-    ## `/product/createTester/{productId}`
+    ## `/product/deleteProduct/<int:productId>`
     '''
-    permissions_classes=[
-        permissions.IsAuthenticated,
-    ]
-    if request.method == 'POST':
-        try:
-            Tester.objects.get(product=productId, user=self.request.user.id)
-            return Response("이미 존재하는 유저입니다")
-        except:
-            user = User.objects.get(id=self.request.user.id)
-            product = Product.objects.get(id=productId)
-            grade = request.data.get('grade')
-
-            tester = Tester.objects.create(
-                product=product, user=user, grade=grade
-            )
-            print(tester)
-            return Response(tester)
-    else:
-        raise NameError
-
-@api_view(['DELETE'])
-def deleteTester(request, productId):
-    '''
-    상품 테스터에 유저 삭제
-    ---
-    ## `/product/deleteTester/{productId}`
-    '''
-    permissions_classes=[
-        permissions.IsAuthenticated,
-    ]
-    if request.method == 'DELETE':
-        tester = Tester.objects.get(post=productId, user=self.request.user.id)
-
-        tester.delete()
-        return Response("delete success")
-    else:
-        raise NameError
+    def delete(self, request, productId, *args, **kwargs):
+        product = Product.objects.get(id=productId)
+        product.delete()
+        return Response({'info': 'Database deleted'})
 
 
-@api_view(['GET'])
-def loadTesters(request, productId):
+class loadTesters(generics.GenericAPIView):
     '''
     상품 테스터에 대한 전체 등급 선정을 위한 조회
     ---
     ## `/product/loadTester/{productId}`
     '''
-    queryset = Tester.objects.all().order_by('-id')
-    queryset = queryset.filter(id = productId)
-    testers = []
-    for query in queryset:
-        tester = {}
-        tester['id'] = query.id
-        tester['user'] = query.user
-        tester['grade'] = query.user.username
-        tester['createdAt'] = query.createdAt
-        testers.append(tester)
-    return Response(testers)
+    def get(self, request, productId, *args, **kwargs):
+        print(productId)
+        queryset = Tester.objects.filter(product=productId).order_by('user')
+        testers = TesterSerializer(queryset, many = True).data
+        print(tester)
+        return response({'testers': testers})
 
+
+class createTester(generics.GenericAPIView):
+    '''
+    상품 테스터에 유저 추가
+    ---
+    ## `/product/createTester/{productId}`
+    '''
+    permissions_classes = [
+        permissions.IsAuthenticated,
+    ]
+    def post(self, request, productId, *args, **kwargs):
+        try:
+            Tester.objects.get(productId=productId, user=self.request.user.id)
+            return Response('이미 존재하는 유저이다')
+        except:
+            user = User.objects.get(id = self.request.user.id)
+            product = Product.objects.get(id = productId)
+            grade = request.data.get('grade')
+
+            tester = Tester.objects.create(
+                product = product, user=user, grade, grade
+            )
+            print(tester)
+            return Response({'tester': tester})
+
+class deleteTester(generics.GenericAPIView):
+    '''
+    상품 테스터에 유저 삭제
+    ---
+    ## `/product/deleteTester/{productId}`
+    '''
+    permissions_classes = [
+        permissions.IsAuthenticated,
+    ]
+    def delete(self, request, *args, **kwargs):
+        tester = Tester.objects.filter(product=productId)
+        tester.delete()
+        return Response("Database deleted!")
 
 
 class loadComments(generics.GenericAPIView):
@@ -128,9 +124,7 @@ class loadComments(generics.GenericAPIView):
         print(comments)
         return Response({"comments" : comments})
 
-
-
-## Comment 기능
+## Comment 생성
 class createComment(generics.GenericAPIView):
     '''
     상품 댓글에 유저 추가 및 삭제
@@ -143,36 +137,24 @@ class createComment(generics.GenericAPIView):
     def post(self, request, productId, *args, **kwargs):
         print(self.request.data, productId)
         print(self.request.user)
-        try:
-            Comment.objects.get(product=productId, user=self.request.user.id)
-            return Response("이미 존재하는 유저입니다")
-        except:
-             user = User.objects.get(id=self.request.user.id)
-             product = Product.objects.get(id=productId)
-             content = request.data.get('content')
-
-             comment = Comment.objects.create(
+        user = User.objects.get(id=self.request.user.id)
+        product = Product.objects.get(id=productId)
+        content = request.data.get('content')
+        print(content, user, product)
+        comment = Comment.objects.create(
                     product=product, user=user, content=content
-                )
-             print(comment)
-             return Response(comment)
-        else:
-            raise NameError
+        )
+        comment = CommentSerializer(comment).data
+        return Response({'comment': comment})
 
-@api_view(['DELETE'])
-def deleteComment(request, commentId):
+## comment 삭제
+class deleteComment(generics.GenericAPIView):
     '''
-    상품 댓글에 유저 추가 및 삭제
+    상품 댓글 삭제
     ---
-    ## `/product/deleteComment/{commentId}`
+    ## `/product/deleteComment/<int:commentId>`
     '''
-    permissions_classes=[
-        permissions.IsAuthenticated,
-    ]
-    if request.method == 'DELETE':
-        comment = Comment.objects.get(id = commentId)
-
+    def delete(self, request, commentId, *args, **kwargs):
+        comment = Comment.objects.get(id=commentId)
         comment.delete()
-        return Response("delete success")
-    else:
-        raise NameError
+        return Response({'info': 'Database deleted'})

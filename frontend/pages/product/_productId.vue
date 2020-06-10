@@ -43,7 +43,6 @@
       <v-col cols="2">수정</v-col>
       <v-col cols="2">삭제</v-col>
       <v-col cols="12" v-for="(comment, index) in comments" :key="index">
-        {{comments}}
         <comment-card-component :comment="comment"/>
       </v-col>
     </v-row>
