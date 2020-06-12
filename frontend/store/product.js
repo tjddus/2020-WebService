@@ -1,4 +1,4 @@
-import products from "../pages/products";
+import products from "../pages/PublishedProducts";
 
 export const state = () => ({
   products: [],
@@ -17,22 +17,40 @@ export const mutations = {
   },
   uploadProduct(state, payload) {
     const {product} = payload;
-    state.products.push(product);
+    state.PublishedProducts.push(product);
     state.imageUrls = [];
   },
   deleteProduct(state, payload) {
     const {productId} = payload;
     state.product = null;
-    state.products.splice(state.products.findIndex(product => product.id === productId), 1);
+    state.PublishedProducts.splice(state.PublishedProducts.findIndex(product => product.id === productId), 1);
   }
 };
 export const actions = {
   /*-- load --*/
-  loadProducts({commit}, payload) {
+  loadPublishedProducts({commit}, payload) {
     return new Promise(async (resolve, reject) => {
         try {
 
-          const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadProducts`, {
+          const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadPublishedProducts`, {
+            withCredentials: true
+          });
+          const {products} = res.data;
+          commit('loadProducts', {products});
+          return resolve();
+        } catch (e) {
+          console.error(e);
+          return reject(e);
+        }
+      }
+    )
+  },
+
+  loadNotPublishedProducts({commit}, payload) {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+          const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadNotPublishedProducts`, {
             withCredentials: true
           });
           const {products} = res.data;

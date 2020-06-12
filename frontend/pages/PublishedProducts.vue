@@ -53,7 +53,7 @@
     async created() {
       //상품 전부 로딩
       console.log('products created');
-      await this.$store.dispatch('product/loadProducts');
+      await this.$store.dispatch('product/loadPublishedProducts');
     },
   }
 </script>

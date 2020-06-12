@@ -9,6 +9,8 @@ export const actions = {
       app.$axios.defaults.headers.common['Authorization'] = `Token ${cookie}`;
 
       await dispatch('user/loadMe', {cookie});
+      await dispatch('product/loadPublishedProducts');
+      await dispatch('product/loadNotPublishedProducts');
       // await dispatch('post/loadPosts', {reset: true});
       // await dispatch('waitingRoom/loadChatMe');
     } catch (e) {

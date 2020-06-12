@@ -55,8 +55,8 @@
         items: [
           {title: 'WADIZ', icon: 'school', route: '/'},
           {title: '내 파일', icon: 'folder', route: '/'},
-          {title: '최근 항목', icon: 'list', route: '/'},
-          {title: '상품목록', icon: 'image', route: '/products'},
+          {title: '심사상품목록', icon: 'list', route: '/NotPublishedProducts'},
+          {title: '상품목록', icon: 'image', route: '/PublishedProducts'},
         ]
       }
     }
