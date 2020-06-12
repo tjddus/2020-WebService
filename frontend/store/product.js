@@ -17,13 +17,12 @@ export const mutations = {
   },
   uploadProduct(state, payload) {
     const {product} = payload;
-    state.PublishedProducts.push(product);
-    state.imageUrls = [];
+    state.products.push(product);
   },
   deleteProduct(state, payload) {
     const {productId} = payload;
     state.product = null;
-    state.PublishedProducts.splice(state.PublishedProducts.findIndex(product => product.id === productId), 1);
+    state.products.splice(state.products.findIndex(product => product.id === productId), 1);
   }
 };
 export const actions = {

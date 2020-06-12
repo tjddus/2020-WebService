@@ -52,7 +52,7 @@
           </v-btn>
         </v-card-actions>
 
-        <product-test-form-component :sdialog="sdialog"/>
+        <product-test-form-component :sdialog="sdialog" :productId="productId"/>
       </v-card>
     </v-dialog>
   </div>
@@ -64,7 +64,8 @@
   export default {
     name: "AcceptPrivacyComponent",
     props: {
-      dialog: Boolean
+      dialog: Boolean,
+      productId: Number,
     },
     components: {
       ProductTestFormComponent
@@ -82,7 +83,7 @@
           this.sdialog = true;
         }
       }
-    }
+    },
   }
 </script>
 

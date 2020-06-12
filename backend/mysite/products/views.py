@@ -116,17 +116,18 @@ class createTester(generics.GenericAPIView):
     ]
     def post(self, request, productId, *args, **kwargs):
         try:
-            Tester.objects.get(productId=productId, user=self.request.user.id)
+            Tester.objects.get(product=productId, user=self.request.user.id)
             return Response('이미 존재하는 유저이다')
         except:
             user = User.objects.get(id = self.request.user.id)
             product = Product.objects.get(id = productId)
             grade = request.data.get('grade')
+            content = request.data.get('content')
 
             tester = Tester.objects.create(
-                product = product, user=user, grade=grade
+                product = product, user=user, grade=grade, content=content
             )
-            print(tester)
+            tester = TesterSerializer(tester).data
             return Response({'tester': tester})
 
 class deleteTesters(generics.GenericAPIView):
@@ -143,7 +144,7 @@ class deleteTesters(generics.GenericAPIView):
         tester.delete()
         return Response("Database deleted!")
 
-
+## Comment 로드
 class loadComments(generics.GenericAPIView):
     def get(self, request, productId, *args, **kwargs):
         print(productId)
@@ -174,6 +175,27 @@ class createComment(generics.GenericAPIView):
         )
         comment = CommentSerializer(comment).data
         return Response({'comment': comment})
+
+
+class updateComment(generics.GenericAPIView):
+    '''
+    상품 댓글 수정
+    ---
+    ## `/product/updateComment/<int:commentId>`
+    '''
+    permissions_classes = [
+        permissions.IsAuthenticated
+    ]
+    def post(self, request, commentId, *args, **kwargs):
+        print(request.data)
+        newContent = request.data.get('newContent')
+
+        queryset = Comment.objects.get(id=commentId)
+        queryset.content = newContent
+        queryset.save()
+        print(queryset)
+        updatedComment = CommentSerializer(queryset).data
+        return Response({'updatedComment': updatedComment})
 
 ## comment 삭제
 class deleteComment(generics.GenericAPIView):

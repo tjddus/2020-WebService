@@ -22,12 +22,12 @@ class Product(models.Model):
 class Tester(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    grade = models.CharField(max_length=10)
+    grade = models.IntegerField(default=0)
     content = models.CharField(max_length=300)
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.contents
+        return self.content
 
 
 class Comment(models.Model):

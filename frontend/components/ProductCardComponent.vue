@@ -42,9 +42,17 @@
             <strong>{{ Math.ceil(value) }}%</strong>
           </template>
         </v-progress-linear>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          text
+          @click="checkGrade"
+        >
+          등급 확인
+        </v-btn>
       </v-card-text>
       <v-card-text v-else>
-          <accept-privacy-component :dialog="dialog"/>
+          <accept-privacy-component :dialog="dialog" :productId="productId"/>
       </v-card-text>
     </v-card>
   </v-row>

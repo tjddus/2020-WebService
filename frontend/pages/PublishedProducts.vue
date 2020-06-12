@@ -14,27 +14,6 @@
       </div>
     </v-layout>
   </v-container>
-  <!--  <v-container class="grey lighten-5">-->
-  <!--    <v-row no-gutters>-->
-  <!--      <div v-if="products !== null">-->
-  <!--        <v-col md="3" v-for="(product, index) in products">-->
-  <!--          {{index}}-->
-  <!--          <product-card-component :product="product" class="card"/>-->
-  <!--        </v-col>-->
-  <!--        <v-col md="3" v-for="(product, index) in products">-->
-  <!--          {{index}}-->
-  <!--          <product-card-component :product="product" class="card"/>-->
-  <!--        </v-col>-->
-  <!--        <v-col md="3" v-for="(product, index) in products">-->
-  <!--          {{index}}-->
-  <!--          <product-card-component :product="product" class="card"/>-->
-  <!--        </v-col>-->
-  <!--      </div>-->
-  <!--      <v-col cols="12">-->
-  <!--        <post-form-component/>-->
-  <!--      </v-col>-->
-  <!--    </v-row>-->
-  <!--  </v-container>-->
 </template>
 
 <script>

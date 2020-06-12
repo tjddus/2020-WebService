@@ -7,7 +7,7 @@
         </v-col>
         <v-col cols="6">
           <v-text-field v-if="updateTrue"
-                        v-model="newComment">
+                        v-model="newContent">
           </v-text-field>
           <div v-if="!updateTrue" @click="updateCommentTrue">
             {{comment.content}}
@@ -35,7 +35,7 @@
     data() {
       return {
         updateTrue: false,
-        newComment: this.comment.content
+        newContent: this.comment.content
       }
     },
     props: {
@@ -53,16 +53,15 @@
       },
       updateCommentTrue() {
         this.updateTrue = !this.updateTrue;
-        this.newComment = this.comment.content;
+        this.newContent = this.comment.content;
         console.log('click updateComment');
       },
       async updateComment() {
         try {
           await this.$store.dispatch('comment/updateComment', {
-            comment: this.comment,
-            newComment: this.newComment
+            commentId: this.comment.id,
+            newContent: this.newContent
           });
-          this.newComment = this.comment.comment;
           this.updateTrue = false;
         } catch (e) {
           console.error(e);

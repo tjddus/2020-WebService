@@ -38,9 +38,10 @@ export const actions = {
   createTester({commit}, payload) {
     return new Promise(async (resolve, reject) => {
       try {
-        const {productId, grade} = payload;
-        const res = await this.$axios.post(`http://127.0.0.1:8000/product/createtester/${productId}`, {
-          grade
+        const {productId, grade, content} = payload;
+        console.log(productId, grade, content);
+        const res = await this.$axios.post(`http://127.0.0.1:8000/product/createTester/${productId}`, {
+          grade, content
         }, {
           withCredentials: true
         });
@@ -55,14 +56,14 @@ export const actions = {
     })
   },
 
-  deleteTester({commit}, payload) {
+  deleteTesters({commit}, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         const {productId} = payload;
-        await this.$axios.delete(`http://127.0.0.1:8000/product/deletetester/${productId}`, {
+        await this.$axios.delete(`http://127.0.0.1:8000/product/deleteTesters/${productId}`, {
           withCredentials: true
         });
-        commit('deleteTester', {productId});
+        commit('deleteTesters', {productId});
         return resolve();
       } catch (e) {
         console.error(e);

@@ -115,7 +115,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': '2019-WebService',
+            'NAME': '2020-WebService',
             'USER': 'root',
             'PASSWORD': 'ksy98042!',
             'HOST': 'localhost',

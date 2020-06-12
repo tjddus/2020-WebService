@@ -13,7 +13,7 @@ urlpatterns = [
     path('loadTesters/<int:productId>', views.loadTesters.as_view()),
     path('createComment/<int:productId>', views.createComment.as_view()),
     path('deleteComment/<int:commentId>', views.deleteComment.as_view()),
-#     path('updateComment/<int:commentId>', views.deleteComment.as_view()),
+    path('updateComment/<int:commentId>', views.updateComment.as_view()),
     path('loadComments/<int:productId>', views.loadComments.as_view()),
 
 ]

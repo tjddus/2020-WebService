@@ -11,8 +11,9 @@ export const mutations = {
     state.comments.push(comment);
   },
   updateComment(state, payload) {
-    const {comment, updatedComment} = payload;
-    state.comments.splice(state.comments.indexOf(comment), 1, updatedComment);
+    const {commentId, updatedComment} = payload;
+    state.comments.splice(state.comments.findIndex(comment => comment.id === commentId), 1, updatedComment);
+    console.log('updated comemnt', state.comments);
   },
   deleteComment(state, payload) {
     const {commentId} = payload;
@@ -56,7 +57,24 @@ export const actions = {
       }
     })
   },
-
+  updateComment({commit}, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const {commentId, newContent} = payload;
+        const res = await this.$axios.post(`http://127.0.0.1:8000/product/updateComment/${commentId}`, {
+          newContent
+        }, {
+          withCredentials: true
+        });
+        const {updatedComment} = res.data;
+        commit('updateComment', {commentId, updatedComment});
+        return resolve();
+      } catch (e) {
+        console.error(e);
+        return reject(e);
+      }
+    })
+  },
   deleteComment({commit}, payload) {
     return new Promise(async (resolve, reject) => {
       try {
