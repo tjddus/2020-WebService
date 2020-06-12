@@ -44,7 +44,7 @@
         </v-progress-linear>
       </v-card-text>
       <v-card-text v-else>
-          <product-test-form :dialog="dialog"/>
+          <accept-privacy-component :dialog="dialog"/>
       </v-card-text>
     </v-card>
   </v-row>
@@ -52,12 +52,12 @@
 
 
 <script>
-  import ProductTestForm from "./ProductTestForm";
+  import AcceptPrivacyComponent from "./AcceptPrivacyComponent";
 
   export default {
     name: "ProductCardComponent",
     components: {
-      ProductTestForm
+      AcceptPrivacyComponent
     },
     data() {
       return {
