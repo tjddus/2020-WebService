@@ -15,9 +15,16 @@ export const mutations = {
     const {product} = payload;
     state.product = product;
   },
-  uploadProduct(state, payload) {
-    const {product} = payload;
-    state.products.push(product);
+
+  updateComment(state, payload) {
+    const {commentId, updatedComment} = payload;
+    state.comments.splice(state.comments.findIndex(comment => comment.id === commentId), 1, updatedComment);
+    console.log('updated comemnt', state.comments);
+  },
+  editProduct(state, payload) {
+    const {productId, newProduct} = payload;
+    console.log('mutations editProduct', productId, newProduct);
+    state.products.splice(state.products.findIndex(product => product.id === productId), 1, newProduct);
   },
   deleteProduct(state, payload) {
     const {productId} = payload;
@@ -26,11 +33,27 @@ export const mutations = {
   }
 };
 export const actions = {
+
+  loadAllProducts({commit}, paylaod) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadAllProducts`, {
+          withCredentials: true
+        });
+        const {products} = res.data;
+        commit('loadProducts', {products});
+        return resolve();
+      } catch (e) {
+        console.error(e);
+        return reject(e);
+      }
+    })
+  },
+
   /*-- load --*/
   loadPublishedProducts({commit}, payload) {
     return new Promise(async (resolve, reject) => {
         try {
-
           const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadPublishedProducts`, {
             withCredentials: true
           });
@@ -82,20 +105,16 @@ export const actions = {
     })
   },
 
-  // *-- product --*
-  uploadProduct({commit}, payload) {
+  editProduct({commit}, payload) {
     return new Promise(async (resolve, reject) => {
       try {
-        const {title, content, imageUrls, tagNames} = payload;
-        const res = await this.$axios.post('http://127.0.0.1:8000/product/createProduct', {
-          title, content, imageUrls, tagNames
-        }, {
+        const {productId} = payload;
+        const res = await this.$axios.get(`http://127.0.0.1:8000/product/editProduct/${productId}`, {
           withCredentials: true
         });
-        const {product} = res.data;
-        commit('uploadProduct', {product});
+        const {newProduct} = res.data;
+        commit('editProduct', {productId, newProduct});
         return resolve();
-
       } catch (e) {
         console.error(e);
         return reject(e);

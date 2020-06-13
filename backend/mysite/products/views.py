@@ -8,6 +8,11 @@ from products.models import Product, Tester, Comment
 from django.contrib.auth.models import User
 from products.serializers import ProductSerializer, CommentSerializer, TesterSerializer, CreateProductSerializer
 
+class loadAllProducts(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        queryset = Product.objects.all()
+        products = ProductSerializer(queryset, many=True).data
+        return Response({'products': products})
 
 class loadPublishedProducts(generics.GenericAPIView):
     '''
@@ -89,6 +94,20 @@ class deleteProduct(generics.GenericAPIView):
         product = Product.objects.get(id=productId)
         product.delete()
         return Response({'info': 'Database deleted'})
+
+class editProduct(generics.GenericAPIView):
+     '''
+     상품 삭제 페이지
+     ---
+     ## `/product/deleteProduct/<int:productId>`
+     '''
+     def get(self, request, productId, *args, **kwargs):
+        queryset = Product.objects.get(id = productId)
+        queryset.publishedYn = True
+        queryset.save()
+        print(queryset)
+        newProduct = ProductSerializer(queryset).data
+        return Response({'newProduct': newProduct})
 
 
 class loadTesters(generics.GenericAPIView):
