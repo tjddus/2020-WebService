@@ -1,10 +1,7 @@
 <template>
   <v-form v-model="valid" @submit.prevent="createComment">
     <v-container>
-      <v-row>
-        <v-col cols="3">
-          {{me.nickName}}
-        </v-col>
+      <v-row justify="center">
         <v-col cols="8">
           <v-text-field
             v-model="content"
@@ -12,6 +9,7 @@
             :append-outer-icon="content? 'mdi-send':''"
             clear-icon="mdi-close-circle"
             clearable
+            style="width: 560px"
             @click:append-outer="createComment"
             @click:clear="clearComment"
           >

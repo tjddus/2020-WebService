@@ -54,7 +54,7 @@
         drawer: null,
         items: [
           {title: '전체 모니터링', icon: 'computer', route: '/allProducts'},
-          {title: '내 파일', icon: 'folder', route: '/'},
+          {title: '등급 통계', icon: 'check_circle_outline', route: '/'},
           {title: '심사상품목록', icon: 'list', route: '/NotPublishedProducts'},
           {title: '상품목록', icon: 'image', route: '/PublishedProducts'},
         ]

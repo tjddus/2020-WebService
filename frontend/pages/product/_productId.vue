@@ -1,57 +1,60 @@
 <template>
-  <div>
-    <v-row no-gutters
-           justify="center">
-      <v-col col="6">
-        <v-row class="my-10">
-          <v-col cols="12">
-            <img :src="product.photoUrl" width="90%" class="border 1px darkgrey;">
+  <v-layout justify-center="center" align-center="center" class="my-10">
+    <v-flex
+      xs12 md10>
+      <div>
+        <v-row no-gutters>
+          <v-col col="9">
+            <v-row>
+              <v-col cols="12">
+                <img :src="product.photoUrl" width="610px" class="border 1px darkgrey;">
+              </v-col>
+              <div class="pa-6">
+                <v-col cols="12">
+                  <h1 class="title text-left font-weight-bold">{{product.name}}</h1>
+                </v-col>
+                <v-col cols="12">
+                  <div class="subtitle-2 grey--text">{{product.makerName}}</div>
+                </v-col>
+              </div>
+            </v-row>
           </v-col>
-          <v-col cols="12">
-            <div class="title font-weight-bold">{{product.name}}</div>
-          </v-col>
-          <v-col cols="12">
-            {{product.makerName}}
+          <v-col col="3" class="pa-8">
+            <v-row>
+              <v-col cols="12" class="font-weight-bold">
+                <h2 styl="title">남은 시간 <span class="blue--text text--darken-4">"{{endTime}}"</span>일</h2>
+              </v-col>
+              <v-progress-linear
+                color="primary"
+                height="3"
+                reactive
+              ></v-progress-linear>
+              <v-col cols="12" class="subtitle-2 font-weight-normal">
+                카테고리<span class="title font-weight-bold">&nbsp; {{product.category}}</span>
+              </v-col>
+              <v-col cols="12" class="subtitle-2 font-weight-normal">
+                펀딩률<span class="title font-weight-bold">&nbsp; {{product.achievementRate}}</span> %
+              </v-col>
+              <v-col cols="12" class="subtitle-2 font-weight-normal">
+                가격<span class="title font-weight-bold">&nbsp; {{amount}}</span> 원
+              </v-col>
+              <v-col cols="12" class="subtitle-2 font-weight-normal">
+                서포터수<span class="title font-weight-bold">&nbsp; {{product.totalSupporter}}</span> 명
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
-      </v-col>
-      <v-col col="3">
-        <v-row>
-          <v-col cols="12">
-            {{product.category}}
-          </v-col>
-          <v-col cols="12">
-            {{product.achievementRate}}
-          </v-col>
-          <v-col cols="12">
-            {{product.totalAmount}}
-          </v-col>
-          <v-col cols="12">
-            {{product.totalSupporter}}
-          </v-col>
-          <v-col cols="12">
-            {{time}}
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-btn @click.prevent="deleteProduct">삭제</v-btn>
-    <comment-form-component :productId="product.id"/>
-    <v-row v-if="comments.length !== 0">
-      <v-col cols="3">아이디</v-col>
-      <v-col cols="5">댓글</v-col>
-      <v-col cols="2">수정</v-col>
-      <v-col cols="2">삭제</v-col>
-      <v-col cols="12" v-for="(comment, index) in comments" :key="index">
-        <comment-card-component :comment="comment"/>
-      </v-col>
-    </v-row>
-  </div>
+        <comment-card-component/>
+        <comment-form-component :productId="product.id"/>
+      </div>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
   import CommentFormComponent from "../../components/CommentFormComponent";
   import CommentCardComponent from "../../components/CommentCardComponent";
+  import moment from 'moment';
 
   export default {
     name: "_productId",
@@ -63,12 +66,15 @@
       product() {
         return this.$store.state.product.product;
       },
-      comments() {
-        return this.$store.state.comment.comments;
+      endTime() {
+        var momentObj = moment(this.product.createdDate);
+        var momentObj = momentObj.add('30', 'days').subtract(moment(new Date()));
+        var endTime = momentObj.format('DD');
+        return endTime
       },
-      time() {
-        return this.$moment(this.product.createdAt).fromNow();
-      },
+      amount() {
+        return parseInt(this.product.totalAmount / this.product.totalSupporter);
+      }
     },
 
     async fetch({store, params}) {

@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <h3 class="font-weight-bold px-10">펀딩 상품 목록</h3>
+    <br>
     <v-layout row justify-center="center">
       <div v-for="(product, index) in products">
         <v-flex md4 v-if="index % 3 === 0">

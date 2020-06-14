@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <h3 class="font-weight-bold px-10">심사 상품 목록</h3>
+    <br>
     <v-layout row justify-center="center">
       <div v-for="(product, index) in products">
         <v-flex md4 v-if="index % 3 === 0">
@@ -14,27 +16,6 @@
       </div>
     </v-layout>
   </v-container>
-  <!--  <v-container class="grey lighten-5">-->
-  <!--    <v-row no-gutters>-->
-  <!--      <div v-if="products !== null">-->
-  <!--        <v-col md="3" v-for="(product, index) in products">-->
-  <!--          {{index}}-->
-  <!--          <product-card-component :product="product" class="card"/>-->
-  <!--        </v-col>-->
-  <!--        <v-col md="3" v-for="(product, index) in products">-->
-  <!--          {{index}}-->
-  <!--          <product-card-component :product="product" class="card"/>-->
-  <!--        </v-col>-->
-  <!--        <v-col md="3" v-for="(product, index) in products">-->
-  <!--          {{index}}-->
-  <!--          <product-card-component :product="product" class="card"/>-->
-  <!--        </v-col>-->
-  <!--      </div>-->
-  <!--      <v-col cols="12">-->
-  <!--        <post-form-component/>-->
-  <!--      </v-col>-->
-  <!--    </v-row>-->
-  <!--  </v-container>-->
 </template>
 
 <script>
