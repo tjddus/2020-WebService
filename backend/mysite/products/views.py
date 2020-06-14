@@ -120,8 +120,8 @@ class loadTesters(generics.GenericAPIView):
         print(productId)
         queryset = Tester.objects.filter(product=productId).order_by('user')
         testers = TesterSerializer(queryset, many = True).data
-        print(tester)
-        return response({'testers': testers})
+        print(testers)
+        return Response({'testers': testers})
 
 
 class createTester(generics.GenericAPIView):

@@ -50,9 +50,14 @@
         >
           등급 확인
         </v-btn>
+        <div v-if="gdialog === true">
+          <grade-check-component :gdialog="gdialog" :productId="productId"/>
+        </div>
       </v-card-text>
+
+
       <v-card-text v-else>
-          <accept-privacy-component :dialog="dialog" :productId="productId"/>
+        <accept-privacy-component :dialog="dialog" :productId="productId"/>
       </v-card-text>
     </v-card>
   </v-row>
@@ -61,18 +66,21 @@
 
 <script>
   import AcceptPrivacyComponent from "./AcceptPrivacyComponent";
+  import GradeCheckComponent from "./GradeCheckComponent";
 
   export default {
     name: "ProductCardComponent",
     components: {
-      AcceptPrivacyComponent
+      AcceptPrivacyComponent,
+      GradeCheckComponent
     },
     data() {
       return {
         loading: false,
         selection: 1,
         productId: String(this.product.id),
-        dialog: false
+        dialog: false,
+        gdialog: false
       }
     },
     props: {
@@ -93,6 +101,9 @@
       createTester(productId) {
         this.dialog = true;
         this.$store.dispatch('product/createTester');
+      },
+      checkGrade() {
+        this.gdialog = true;
       }
     },
 
