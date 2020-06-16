@@ -54,8 +54,10 @@
         drawer: null,
         items: [
           {title: '전체 모니터링', icon: 'computer', route: '/allProducts'},
+          {title: '개별등급 모니터링', icon: 'developer_board', route: '/GradeProducts'},
           {title: '심사상품목록', icon: 'list', route: '/NotPublishedProducts'},
           {title: '상품목록', icon: 'image', route: '/PublishedProducts'},
+          {title: '종료상품목록', icon: 'image', route: '/EndProducts'},
         ]
       }
     }

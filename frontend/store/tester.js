@@ -1,8 +1,14 @@
 export const state = () => ({
   tester: null,
   testers: [],
-  averageGrade: '',});
+  averageGrade: '',
+  allProductsTesters: []
+});
 export const mutations = {
+  loadAllProductsTesters(state, payload) {
+    const {allProductsTesters} = payload;
+    state.allProductsTesters = allProductsTesters
+  },
   loadTesters(state, payload) {
     const {testers} = payload;
     state.testers = testers;
@@ -18,6 +24,24 @@ export const mutations = {
   }
 };
 export const actions = {
+  loadAllTesters({commit}, payload) {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+          const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadAllTesters`, {
+            withCredentials: true
+          });
+          const {allProductsTesters} = res.data;
+          commit('loadAllProductsTesters', {allProductsTesters});
+          return resolve();
+        } catch (e) {
+          console.error(e);
+          return reject(e);
+        }
+      }
+    )
+  },
+
   loadTesters({commit}, payload) {
     return new Promise(async (resolve, reject) => {
       try {

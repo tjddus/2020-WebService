@@ -15,7 +15,6 @@ export const mutations = {
     const {product} = payload;
     state.product = product;
   },
-
   updateComment(state, payload) {
     const {commentId, updatedComment} = payload;
     state.comments.splice(state.comments.findIndex(comment => comment.id === commentId), 1, updatedComment);
@@ -38,6 +37,22 @@ export const actions = {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadAllProducts`, {
+          withCredentials: true
+        });
+        const {products} = res.data;
+        commit('loadProducts', {products});
+        return resolve();
+      } catch (e) {
+        console.error(e);
+        return reject(e);
+      }
+    })
+  },
+
+  loadEndProducts({commit}, paylaod) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await this.$axios.get(`http://127.0.0.1:8000/product/loadEndProducts`, {
           withCredentials: true
         });
         const {products} = res.data;

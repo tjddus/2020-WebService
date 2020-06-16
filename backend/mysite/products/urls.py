@@ -7,6 +7,8 @@ urlpatterns = [
     path('loadAllProducts', views.loadAllProducts.as_view()),
     path('loadPublishedProducts', views.loadPublishedProducts.as_view()),
     path('loadNotPublishedProducts', views.loadNotPublishedProducts.as_view()),
+    path('loadEndProducts', views.loadEndProducts.as_view()),
+    path('loadAllTesters', views.loadAllTesters.as_view()),
     path('loadProduct/<int:productId>', views.loadProduct.as_view()),
     path('deleteProduct/<int:productId>', views.deleteProduct.as_view()),
     path('editProduct/<int:productId>', views.editProduct.as_view()),

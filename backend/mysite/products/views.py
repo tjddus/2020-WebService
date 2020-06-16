@@ -36,7 +36,7 @@ class loadPublishedProducts(generics.GenericAPIView):
     '''
     def get(self, request, *args, **kwargs):
         products = []
-        queryset = Product.objects.filter(publishedYn = True)
+        queryset = Product.objects.filter(publishedYn = True, endYn = False)
 #         queryset = Product.objects.all()
         print(queryset)
         products = ProductSerializer(queryset, many=True).data
@@ -48,7 +48,7 @@ class loadNotPublishedProducts(generics.GenericAPIView):
     '''
     상품 전체 조회 페이지
     ---
-    ## `/product/loadProducts`
+    ## `/product/loadNotPublishedProducts`
     ## 내용
         - pid: 상품 아이디
         - name: 상품 이름
@@ -68,6 +68,14 @@ class loadNotPublishedProducts(generics.GenericAPIView):
         products = []
         queryset = Product.objects.filter(publishedYn = False)
 #         queryset = Product.objects.all()
+        print(queryset)
+        products = ProductSerializer(queryset, many=True).data
+        return Response({'products': products})
+
+class loadEndProducts(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs ):
+        products = []
+        queryset = Product.objects.filter(publishedYn = True, endYn= True)
         print(queryset)
         products = ProductSerializer(queryset, many=True).data
         return Response({'products': products})
@@ -109,6 +117,26 @@ class editProduct(generics.GenericAPIView):
         newProduct = ProductSerializer(queryset).data
         return Response({'newProduct': newProduct})
 
+class loadAllTesters(generics.GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        queryset = Tester.objects.all()
+        allProductsTesters =  []
+        averageGrade = 0
+
+        for query in queryset:
+            productTester = {}
+            product = Product.objects.get(id = query.product.id)
+            productTester['productId'] = product.id
+            productTester['name'] = product.name
+            productTester['makerName'] = product.makerName
+            tester = Tester.objects.get(id = query.id)
+            productTester['testerId'] = tester.id
+            productTester['grade'] = tester.grade
+            productTester['content'] = tester.content
+            allProductsTesters.append(productTester)
+        print(allProductsTesters)
+        return Response({'allProductsTesters': allProductsTesters})
+
 
 class loadTesters(generics.GenericAPIView):
     '''
@@ -118,7 +146,7 @@ class loadTesters(generics.GenericAPIView):
     '''
     def get(self, request, productId, *args, **kwargs):
         print(productId)
-        queryset = Tester.objects.filter(product=productId).order_by('user')
+        queryset = Tester.objects.filter(product=productId)
         testers = TesterSerializer(queryset, many = True).data
         print(testers)
         return Response({'testers': testers})

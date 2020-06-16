@@ -18,8 +18,6 @@
           <v-btn @click="changeTryLogin">로그인</v-btn>
         </div>
       </div>
-
-      <PaddingMarginGrid/>
     </v-flex>
   </v-layout>
 </template>
@@ -27,7 +25,6 @@
 <script>
   import LoginComponent from "../components/LoginComponent";
   import SignUpComponent from "../components/SignUpComponent";
-  import PaddingMarginGrid from "../components/PaddingMarginGrid";
 
 
   export default {
@@ -44,7 +41,6 @@
     components: {
       LoginComponent,
       SignUpComponent,
-      PaddingMarginGrid,
     },
     methods: {
       changeTryLogin() {
