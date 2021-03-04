@@ -86,7 +86,7 @@
 펀딩이 종료된 상품 페이지를 확인이 가능하다.
 상품의 이미지, 이름, 심사유무, 출시일, 카테고리, 메이커, 상품 펀딩율를 확인할 수 있다.
 
-<img src="" width="70%">
+<img src="https://user-images.githubusercontent.com/30233659/109947444-a8d4b280-7d1c-11eb-8332-fa10a3f864ae.png" width="70%">
 
 ###### 종료된 상품 페이지
 <img src="https://user-images.githubusercontent.com/30233659/109946619-cc4b2d80-7d1b-11eb-86b3-18daa32b73ca.png" width="70%">
