@@ -42,6 +42,7 @@
 
 #### 데이터베이스 
 총 User, Product, Tester, Comment 4가지 table로 데이터베이스를 구성했습니다. Product의 경우, 실제 크롤링된 와디즈의 펀딩 상품을 기반으로 테이블을 구성했습니다. Tester의 경우 앞서 말한 사용 시범단으로 User 기반으로 구성했습니다.
+<img src="https://user-images.githubusercontent.com/30233659/109946158-4af39b00-7d1b-11eb-8657-5a55b8120a41.png" width="80%">
 
 
 ## Install
@@ -55,23 +56,38 @@
 상품 펀딩 종료, 펀딩 심사중, 펀딩 진행중으로 나누어 타입 아이콘 달리했다.
 1)	심사중인 상품 > 펀딩 출시 상품으로 변경
 2)	클릭 라인에 해당하는 상품을 삭제
+<img src="https://user-images.githubusercontent.com/30233659/109946307-6fe80e00-7d1b-11eb-9978-a658e77f6eae.png" width="70%">
 
 ###### 개별 등급 모니터링 페이지
 심사중인 상품에 대한 사용자들의 등급 평가를 모니터링하는 페이지이다. 상품 이름, 메이커, 유저 아이디, 심사점수에 대한 필드를 확인할 수 있다.
 등급 평가에 따른 기준 점수 이하의 경우 위의 상품 모니터링 페이지의 펀딩 상품 삭제를 통해 삭제된다.
+
+<img src="https://user-images.githubusercontent.com/30233659/109946365-81311a80-7d1b-11eb-9013-d89ede99b73c.png" width="70%">
 
 ###### 심사중인 상품 페이지
 심사중인 상품에 대한 정보를 확인할 수 있다.
 상품의 이미지, 이름, 심사유무, 출시일, 카테고리, 메이커를 확인할 수 있다.
 심사참여 버튼을 통해 사용자는 심사 등급 평가를 진행할 수 있다.
 
+<img src="https://user-images.githubusercontent.com/30233659/109946416-8ee6a000-7d1b-11eb-8251-9558b062d10c.png" width="70%">
+<img src="https://user-images.githubusercontent.com/30233659/109946476-9e65e900-7d1b-11eb-9635-fdf52e272ed1.png" width="70%">
+
+
 ###### 펀딩 진행 중인 상품 페이지
 펀딩 진행 중인 상품에 대한 정보를 확인할 수 있다.
 상품의 이미지, 이름, 심사유무, 출시일, 카테고리, 메이커, 상품 펀딩율를 확인할 수 있다.
 등급 확인 버튼을 통해 심사 점수에 대한 평균 점수 확인이 가능하다.
 
+<img src="https://user-images.githubusercontent.com/30233659/109946534-ae7dc880-7d1b-11eb-80b9-45a3918d71f6.png" width="70%">
+<img src="https://user-images.githubusercontent.com/30233659/109946578-bdfd1180-7d1b-11eb-90d2-b7e14f91a531.png" width="70%">
+
+
 ###### 개별 상품 페이지
 펀딩이 종료된 상품 페이지를 확인이 가능하다.
 상품의 이미지, 이름, 심사유무, 출시일, 카테고리, 메이커, 상품 펀딩율를 확인할 수 있다.
 
+<img src="" width="70%">
+
+###### 종료된 상품 페이지
+<img src="https://user-images.githubusercontent.com/30233659/109946619-cc4b2d80-7d1b-11eb-86b3-18daa32b73ca.png" width="70%">
 
